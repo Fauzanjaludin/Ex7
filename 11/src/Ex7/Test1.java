@@ -43,6 +43,11 @@ public class Test1 {
 	private JTextField Salary;
 	private JTextField txtInt;
 	private JTextField loanPer;
+	private JTable table;
+	private JTextField txtnme;
+	private JTextField txttel;
+	private JTextField txtpay;
+	private JTextField txtid;
 
 	/**
 	 * Launch the application.
@@ -198,6 +203,168 @@ public class Test1 {
 		JButton btnNewButton = new JButton("Confirm");
 		btnNewButton.setBounds(597, 84, 256, 55);
 		panel.add(btnNewButton);
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 11, 231, 450);
+		panel_1.add(panel_2);
+		panel_2.setLayout(null);
+		
+		txtnme = new JTextField();
+		txtnme.setBounds(80, 39, 141, 20);
+		panel_2.add(txtnme);
+		txtnme.setColumns(10);
+		
+		txttel = new JTextField();
+		txttel.setBounds(80, 70, 141, 20);
+		panel_2.add(txttel);
+		txttel.setColumns(10);
+		
+		txtpay = new JTextField();
+		txtpay.setBounds(80, 101, 141, 20);
+		panel_2.add(txtpay);
+		txtpay.setColumns(10);
+		
+		txtid = new JTextField();
+		txtid.setBounds(80, 11, 141, 20);
+		panel_2.add(txtid);
+		txtid.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("name");
+		lblNewLabel_1.setBounds(10, 42, 46, 14);
+		panel_2.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("no .tel");
+		lblNewLabel_2.setBounds(10, 73, 46, 14);
+		panel_2.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_5 = new JLabel("payment");
+		lblNewLabel_5.setBounds(10, 104, 46, 14);
+		panel_2.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_7 = new JLabel("Ref id");
+		lblNewLabel_7.setBounds(10, 14, 46, 14);
+		panel_2.add(lblNewLabel_7);
+		
+		JButton btnNewButton_1 = new JButton("print");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table.print();
+				}catch(java.awt.print.PrinterException e1){
+					System.err.format("No printer Found", e1.getMessage());
+				}
+			}
+		});
+		btnNewButton_1.setBounds(10, 416, 89, 23);
+		panel_2.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("exit");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (JOptionPane.showConfirmDialog(frmProtonRegistry, "Confirm to exit")== JOptionPane.YES_NO_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+		btnNewButton_2.setBounds(132, 416, 89, 23);
+		panel_2.add(btnNewButton_2);
+		
+		JComboBox cb1 = new JComboBox();
+		cb1.setModel(new DefaultComboBoxModel(new String[] {"Choose a Model", "Saga", "X50", "X70"}));
+		cb1.setMaximumRowCount(4);
+		cb1.setBounds(80, 132, 141, 22);
+		panel_2.add(cb1);
+		
+		JButton btnNewButton_3 = new JButton("add");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.addRow(new Object[]{
+						txtid.getText(),
+						txtnme.getText(),
+						txttel.getText(),
+						txtpay.getText(),
+						cb1.getSelectedItem(),
+				
+				});
+				
+				if (table.getSelectedRow() == -1) {
+					if(table.getRowCount()== 0) {
+						JOptionPane.showMessageDialog(null, "Information Update!","Customer Information System",
+								JOptionPane.OK_OPTION);
+					}
+				}
+			}
+			
+		});
+		btnNewButton_3.setBounds(10, 382, 89, 23);
+		panel_2.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("delete");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				if(table.getSelectedRow()==-1) {
+					if(table.getRowCount()==0) {
+						JOptionPane.showMessageDialog(null, "No data available","Customer Information System",
+								JOptionPane.OK_OPTION);}
+					else {
+						JOptionPane.showMessageDialog(null, "Select a row to delete","Customer Information System",
+								JOptionPane.OK_OPTION);}
+				}
+				
+					else {
+						model.removeRow(table.getSelectedRow());
+						
+					
+				}
+				
+			}
+		});
+		btnNewButton_4.setBounds(132, 382, 89, 23);
+		panel_2.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("reset");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtid.setText("");
+				txtnme.setText("");
+				txttel.setText("");
+				txtpay.setText("");
+				cb1.setSelectedItem("Choose a Model");
+			}
+		});
+		btnNewButton_5.setBounds(10, 174, 89, 23);
+		panel_2.add(btnNewButton_5);
+		
+		JLabel lblNewLabel_3 = new JLabel("Model");
+		lblNewLabel_3.setBounds(10, 136, 46, 14);
+		panel_2.add(lblNewLabel_3);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(251, 11, 631, 450);
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 611, 428);
+		panel_3.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"ID", "Name", "No. Tel", "Model", "Payment"
+			}
+		));
+		scrollPane.setViewportView(table);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
